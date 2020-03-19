@@ -1,0 +1,12 @@
+instagram_basic_display.settings:
+  type: config_object
+  label: 'Instagram Basic Api Settings'
+  mapping:
+    app_key:
+      type: string
+    app_secret:
+      type: string
+    redirect_uri:
+      type: string
+    count:
+      type: string

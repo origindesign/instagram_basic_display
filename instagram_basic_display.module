@@ -1,0 +1,50 @@
+<?php
+
+/**
+ *  Change layout of page to have no wrappers when on calling meteo service
+ *
+ */
+function instagram_basic_display_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+
+	if(
+	    strpos(\Drupal::service('path.current')->getPath(), 'instagram/get-images') !== false
+    ){
+		$suggestions[] = 'page__ajax';
+	}
+	
+}
+
+
+
+/**
+ *  Change layout of html to have no wrappers when on calling meteo service
+ *
+ */
+function instagram_basic_display_theme_suggestions_html_alter(array &$suggestions, array $variables) {
+        
+	if(
+        strpos(\Drupal::service('path.current')->getPath(), 'instagram/get-images') !== false
+    ){
+		$suggestions[] = 'html__ajax';
+	}
+        
+}
+
+
+
+/**
+ * Implements hook_theme().
+ */
+function instagram_basic_display_theme() {
+
+  // Setup forecast template
+  $theme['instagram'] = [
+    'variables' => [
+      'data' => NULL,
+    ],
+    'template' => 'instagram',
+  ];
+
+  return $theme;
+
+}

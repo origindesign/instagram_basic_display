@@ -1,0 +1,16 @@
+{
+    "name": "origindesign/instagram_basic_display",
+    "description": "Instagram Basic Display - Custom Drupal 8 Module for Instagram Basic Display API calls",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lindsay Wilson",
+            "email": "lwilson@origindesign.ca"
+        }
+    ],
+    "type": "drupal-module",
+    "require": {
+		"php": ">=7.0"
+    },
+	"minimum-stability": "dev"
+}

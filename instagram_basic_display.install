@@ -1,0 +1,85 @@
+<?php
+
+function instagram_basic_display_schema() {
+
+  $schema['instagram_access_token'] = [
+
+    'fields' => [
+      'iid' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+      ],
+      'access_token' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'expires_in' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'token_type' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+    ],
+    'unique keys' => [
+      'access_token' => ['access_token'],
+    ],
+    'primary key' => ['iid'],
+
+  ];
+
+  $schema['instagram_media'] = [
+
+    'fields' => [
+      'iid' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+      ],
+      'id' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'caption' => [
+        'type' => 'text',
+      ],
+      'media_type' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'default' => '',
+      ],
+      'timestamp' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'default' => '',
+      ],
+      'username' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'default' => '',
+      ],
+      'media_url' => [
+        'type' => 'text',
+      ],
+      'permalink' => [
+        'type' => 'text',
+      ],
+    ],
+    'unique keys' => [
+      'id' => ['id'],
+    ],
+    'primary key' => ['iid'],
+
+  ];
+
+
+  return $schema;
+
+}

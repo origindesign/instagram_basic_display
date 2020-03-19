@@ -1,0 +1,9 @@
+services:
+  instagram_basic_display.instagram_storage:
+    class: Drupal\instagram_basic_display\InstagramStorage
+    arguments: ['@database']
+  instagram_basic_display.instagram_basic_display_api:
+    class: Drupal\instagram_basic_display\InstagramBasicDisplayApi
+  instagram_basic_display.instagram_controller:
+    class: Drupal\instagram_basic_display\Controller\InstagramBasicDisplayController
+    arguments: ['@instagram_basic_display.instagram_basic_display_api', '@instagram_basic_display.instagram_storage', '@cache_tags.invalidator']

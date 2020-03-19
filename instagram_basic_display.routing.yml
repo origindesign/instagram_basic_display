@@ -1,0 +1,21 @@
+instagram_basic_display.settings_form:
+  path: '/admin/config/services/instagram-basic-display'
+  defaults:
+    _form: '\Drupal\instagram_basic_display\Form\settingsForm'
+    _title: 'Instagram Basic Display API settings'
+  requirements:
+    _permission: 'administer site configuration'
+instagram_basic_display.generate:
+  path: '/instagram/get-images'
+  defaults:
+    _controller: '\Drupal\instagram_basic_display\Controller\InstagramBasicDisplayController::storeUserImages'
+    _title: 'Store Instagram Images to the database'
+  requirements:
+    _access: 'TRUE'
+instagram_basic_display.oauth:
+  path: '/instagram/oauth'
+  defaults:
+    _controller: '\Drupal\instagram_basic_display\Controller\InstagramBasicDisplayController::oAuth'
+    _title: 'Store Instagram Token to the database'
+  requirements:
+    _access: 'TRUE'
