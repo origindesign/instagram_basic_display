@@ -12,6 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\instagram_basic_display\InstagramBasicDisplayApi;
 use Drupal\instagram_basic_display\InstagramStorage;
 use Drupal\Core\Cache\CacheTagsInvalidator;
+use Drupal\Core\Url;
 
 
 class InstagramBasicDisplayController extends ControllerBase {
@@ -32,24 +33,24 @@ class InstagramBasicDisplayController extends ControllerBase {
    * @param \Drupal\instagram_basic_display\InstagramStorage $instagramStorage
    * @param \Drupal\Core\Cache\CacheTagsInvalidator $cacheTagsInvalidator
    */
-    public function __construct(InstagramBasicDisplayApi $instagramBasicDisplayApi, InstagramStorage $instagramStorage, CacheTagsInvalidator $cacheTagsInvalidator) {
-      $this->instagramBasicDisplayApi = $instagramBasicDisplayApi;
-      $this->storage = $instagramStorage;
-      $this->cacheTagsInvalidator = $cacheTagsInvalidator;
-    }
+  public function __construct(InstagramBasicDisplayApi $instagramBasicDisplayApi, InstagramStorage $instagramStorage, CacheTagsInvalidator $cacheTagsInvalidator) {
+    $this->instagramBasicDisplayApi = $instagramBasicDisplayApi;
+    $this->storage = $instagramStorage;
+    $this->cacheTagsInvalidator = $cacheTagsInvalidator;
+  }
 
 
-    /**
-     * @param ContainerInterface $container
-     * @return static
-     */
-    public static function create(ContainerInterface $container) {
-        return new static(
-          $container->get('instagram_basic_display.instagram_basic_display_api'),
-          $container->get('instagram_basic_display.instagram_storage'),
-          $container->get('cache_tags.invalidator')
-        );
-    }
+  /**
+   * @param ContainerInterface $container
+   * @return static
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('instagram_basic_display.instagram_basic_display_api'),
+      $container->get('instagram_basic_display.instagram_storage'),
+      $container->get('cache_tags.invalidator')
+    );
+  }
 
 
   /**
@@ -57,43 +58,43 @@ class InstagramBasicDisplayController extends ControllerBase {
    *
    * @return array
    */
-    public function storeUserImages($truncate = false){
+  public function storeUserImages($truncate = false){
 
-      // Get config
-      $this->getConfig();
+    // Get config
+    $this->getConfig();
 
-      // Refresh and set Access token
-      $this->refreshAccessToken();
-      $this->setAccessToken();
+    // Refresh and set Access token
+    $this->refreshAccessToken();
+    $this->setAccessToken();
 
-      // Set config for api calls
-      $this->instagramBasicDisplayApi->setAccessToken($this->accessToken['access_token']);
+    // Set config for api calls
+    $this->instagramBasicDisplayApi->setAccessToken($this->accessToken['access_token']);
 
-      // Get images using api
-      $images = $this->instagramBasicDisplayApi->getUserMedia('me', $this->moduleConfig['count']);
+    // Get images using api
+    $images = $this->instagramBasicDisplayApi->getUserMedia('me', $this->moduleConfig['count']);
 
-      // Save images to DB
-      if($this->storage->storeImages($images->data,$truncate)){
+    // Save images to DB
+    if($this->storage->storeImages($images->data,$truncate)){
 
-        $this->cacheTagsInvalidator->invalidateTags(['instagram_media']);
-        $response = $this->moduleConfig['count']." Instagram images have been saved to the database";
+      $this->cacheTagsInvalidator->invalidateTags(['instagram_media']);
+      $response = $this->moduleConfig['count']." Instagram images have been saved to the database";
 
-      }else{
+    }else{
 
-        $response = "An error occured while saving instagram images to the database";
-        drupal_set_message($response, 'error');
-
-      }
-
-      $build[] = array(
-        '#type' => 'markup',
-        '#markup' => $response,
-      );
-      $build['#cache']['max-age'] = 0;
-
-      return $build;
+      $response = "An error occured while saving instagram images to the database";
+      drupal_set_message($response, 'error');
 
     }
+
+    $build[] = array(
+      '#type' => 'markup',
+      '#markup' => $response,
+    );
+    $build['#cache']['max-age'] = 0;
+
+    return $build;
+
+  }
 
 
   /** Get authcode from callback
@@ -186,7 +187,7 @@ class InstagramBasicDisplayController extends ControllerBase {
       $configArray = [
         'app_key' => $config->get('app_key'),
         'app_secret' => $config->get('app_secret'),
-        'redirect_uri' => $config->get('redirect_uri'),
+        'redirect_uri' => Url::fromRoute('instagram_basic_display.oauth', [], ['absolute' => TRUE])->toString(),
         'count' => $config->get('count')
       ];
 

@@ -12,6 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\instagram_basic_display\Controller\InstagramBasicDisplayController;
 use Drupal\instagram_basic_display\InstagramBasicDisplayApi;
+use Drupal\Core\Url;
 
 
 /**
@@ -81,7 +82,7 @@ class settingsForm extends ConfigFormBase {
       $configArray = [
         'app_key' => $config->get('app_key'),
         'app_secret' => $config->get('app_secret'),
-        'redirect_uri' => $config->get('redirect_uri')
+        'redirect_uri' => Url::fromRoute('instagram_basic_display.oauth', [], ['absolute' => TRUE])->toString()
       ];
 
       // Set confic of API class
@@ -111,13 +112,6 @@ class settingsForm extends ConfigFormBase {
       '#default_value' => $config->get('app_secret'),
     ];
 
-    $form['redirect_uri'] = [
-      '#type' => 'textfield',
-      '#title' => t('Redirect URI'),
-      '#required' => TRUE,
-      '#default_value' => $config->get('redirect_uri'),
-    ];
-
     $form['count'] = [
       '#type' => 'number',
       '#title' => t('Number of images to pull (max 20)'),
@@ -144,9 +138,6 @@ class settingsForm extends ConfigFormBase {
     if ($form_values['app_secret'] == '') {
       $form_state->setErrorByName('app_secret', $this->t('The App Secret field is required'));
     }
-    if ($form_values['redirect_uri'] == '') {
-      $form_state->setErrorByName('redirect_uri', $this->t('The Redirect URI field is required'));
-    }
     if ($form_values['count'] == '') {
       $form_state->setErrorByName('count', $this->t('The count field is required'));
     }
@@ -166,7 +157,6 @@ class settingsForm extends ConfigFormBase {
     $this->config('instagram_basic_display.settings')
       ->set('app_key', $form_values['app_key'])
       ->set('app_secret', $form_values['app_secret'])
-      ->set('redirect_uri', $form_values['redirect_uri'])
       ->set('count', $form_values['count'])
       ->save();
 
