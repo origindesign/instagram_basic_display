@@ -10,25 +10,24 @@ function instagram_basic_display_schema() {
         'not null' => TRUE,
       ],
       'access_token' => [
-        'type' => 'varchar',
-        'length' => 255,
+        'type' => 'text',
         'not null' => TRUE,
       ],
       'expires_in' => [
         'type' => 'varchar',
-        'length' => 255,
+        'length' => 128,
         'not null' => TRUE,
         'default' => '',
       ],
       'token_type' => [
         'type' => 'varchar',
-        'length' => 255,
+        'length' => 128,
         'not null' => TRUE,
         'default' => '',
       ],
     ],
     'unique keys' => [
-      'access_token' => ['access_token'],
+      'access_token' => ['iid'],
     ],
     'primary key' => ['iid'],
 
@@ -43,7 +42,7 @@ function instagram_basic_display_schema() {
       ],
       'id' => [
         'type' => 'varchar',
-        'length' => 255,
+        'length' => 128,
         'not null' => TRUE,
         'default' => '',
       ],
@@ -52,17 +51,17 @@ function instagram_basic_display_schema() {
       ],
       'media_type' => [
         'type' => 'varchar',
-        'length' => 255,
+        'length' => 128,
         'default' => '',
       ],
       'timestamp' => [
         'type' => 'varchar',
-        'length' => 255,
+        'length' => 128,
         'default' => '',
       ],
       'username' => [
         'type' => 'varchar',
-        'length' => 255,
+        'length' => 128,
         'default' => '',
       ],
       'media_url' => [
