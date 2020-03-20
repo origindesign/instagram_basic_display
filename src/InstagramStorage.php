@@ -41,7 +41,7 @@ class InstagramStorage {
     }
 
     foreach($images as $key => $image){
-      ksm($image);
+
       $query = $this->database->merge('instagram_media');
       $query->key(array(
         'iid' => $key+1
