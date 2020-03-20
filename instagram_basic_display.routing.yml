@@ -6,7 +6,7 @@ instagram_basic_display.settings_form:
   requirements:
     _permission: 'administer site configuration'
 instagram_basic_display.generate:
-  path: '/instagram/get-images'
+  path: '/instagram/generate'
   defaults:
     _controller: '\Drupal\instagram_basic_display\Controller\InstagramBasicDisplayController::storeUserImages'
     _title: 'Store Instagram Images to the database'
