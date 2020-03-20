@@ -94,7 +94,7 @@ class settingsForm extends ConfigFormBase {
         '#markup' => '<a href="'.$url.'" class="button" target="_blank">Login with Instagram</a>',
       ];
       $form['images_button'] = [
-        '#markup' => '<a href="/instagram/get-images" class="button" target="_blank">Pull images from Instagram</a>',
+        '#markup' => '<a href="'.Url::fromRoute('instagram_basic_display.generate', [], ['absolute' => TRUE])->toString().'" class="button" target="_blank">Pull images from Instagram</a>',
       ];
     }
 
