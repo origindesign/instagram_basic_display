@@ -9,89 +9,91 @@ class InstagramStorage {
 
 
 
-    /**
-     * The database connection.
-     *
-     * @var \Drupal\Core\Database\Connection
-     */
-    protected $database;
+  /**
+   * The database connection.
+   *
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected $database;
 
 
-    /**
-     * InstagramStorage constructor.
-     * @param Connection $database
-     */
-    public function __construct(Connection $database) {
-        $this->database = $database;
+  /**
+   * InstagramStorage constructor.
+   * @param Connection $database
+   */
+  public function __construct(Connection $database) {
+    $this->database = $database;
+  }
+
+
+  /**
+   * @param $images
+   * @param bool $truncate
+   *
+   * @return bool
+   * @throws \Exception
+   */
+  public function storeImages($images,$truncate = false){
+
+    if($truncate){
+      $query = $this->database->truncate('instagram_media');
+      $query->execute();
     }
 
+    foreach($images as $key => $image){
+      ksm($image);
+      $query = $this->database->merge('instagram_media');
+      $query->key(array(
+        'iid' => $key+1
+      ));
+      $query->fields(array(
+        'id' => $image->id,
+        'caption' => $image->caption,
+        'media_type' => $image->media_type,
+        'timestamp' => $image->timestamp,
+        'username' => $image->username,
+        'media_url' => ($image->thumbnail_url ? $image->thumbnail_url : $image->media_url),
+        'permalink' => $image->permalink,
+      ));
 
-    /**
-     * @param array $images
-     * @param bool $truncate
-     * @return bool
-     */
-    public function storeImages($images,$truncate = false){
-
-        if($truncate){
-            $query = $this->database->truncate('instagram_media');
-            $query->execute();
-        }
-        
-        foreach($images as $key => $image){
-            
-            $query = $this->database->merge('instagram_media');
-            $query->key(array(
-                'iid' => $key+1
-            ));
-            $query->fields(array(
-                'id' => $image->id,
-                'caption' => $image->caption,
-                'media_type' => $image->media_type,
-                'timestamp' => $image->timestamp,
-                'username' => $image->username,
-                'media_url' => $image->media_url,
-                'permalink' => $image->permalink,
-            ));
-
-            if ( !$query->execute() ){
-                return false;
-            }
-
-        }
-
-        return true;
+      if ( !$query->execute() ){
+        return false;
+      }
 
     }
 
+    return true;
 
-    /**
-     * Get images from DB
-     * @return array
-     */
-    public function getImages(){
+  }
 
-        $query = $this->database->select('instagram_media','instagram');
-        $query->fields('instagram');
-        $result = $query->execute()->fetchAll();
 
-        $data = array();
+  /**
+   * Get images from DB
+   * @return array
+   */
+  public function getImages(){
 
-        foreach($result as $record) {
-            $data[] = array(
-              'id' => $record->id,
-              'caption' => $record->caption,
-              'media_type' => $record->media_type,
-              'timestamp' => $record->timestamp,
-              'username' => $record->username,
-              'media_url' => $record->media_url,
-              'permalink' => $record->permalink,
-            );
-        }
+    $query = $this->database->select('instagram_media','instagram');
+    $query->fields('instagram');
+    $result = $query->execute()->fetchAll();
 
-        return $data;
+    $data = array();
 
+    foreach($result as $record) {
+      $data[] = array(
+        'id' => $record->id,
+        'caption' => $record->caption,
+        'media_type' => $record->media_type,
+        'timestamp' => $record->timestamp,
+        'username' => $record->username,
+        'media_url' => $record->media_url,
+        'permalink' => $record->permalink,
+      );
     }
+
+    return $data;
+
+  }
 
 
   /** Set access token in DB
