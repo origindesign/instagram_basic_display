@@ -7,7 +7,7 @@
 function instagram_basic_display_theme_suggestions_page_alter(array &$suggestions, array $variables) {
 
 	if(
-	    strpos(\Drupal::service('path.current')->getPath(), 'instagram/get-images') !== false
+	    strpos(\Drupal::service('path.current')->getPath(), 'instagram/generate') !== false
     ){
 		$suggestions[] = 'page__ajax';
 	}
@@ -23,7 +23,7 @@ function instagram_basic_display_theme_suggestions_page_alter(array &$suggestion
 function instagram_basic_display_theme_suggestions_html_alter(array &$suggestions, array $variables) {
         
 	if(
-        strpos(\Drupal::service('path.current')->getPath(), 'instagram/get-images') !== false
+        strpos(\Drupal::service('path.current')->getPath(), 'instagram/generate') !== false
     ){
 		$suggestions[] = 'html__ajax';
 	}
