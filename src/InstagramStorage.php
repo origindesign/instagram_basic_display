@@ -52,7 +52,7 @@ class InstagramStorage {
         'media_type' => $image->media_type,
         'timestamp' => $image->timestamp,
         'username' => $image->username,
-        'media_url' => ($image->thumbnail_url ? $image->thumbnail_url : $image->media_url),
+        'media_url' => (isset($image->thumbnail_url) ? $image->thumbnail_url : $image->media_url),
         'permalink' => $image->permalink,
       ));
 
