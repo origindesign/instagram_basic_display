@@ -4,7 +4,8 @@ instagram_basic_display.settings_form:
     _form: '\Drupal\instagram_basic_display\Form\settingsForm'
     _title: 'Instagram Basic Display API settings'
   requirements:
-    _permission: 'administer site configuration'
+    _permission: 'manage Instagram settings'
+
 instagram_basic_display.generate:
   path: '/instagram/generate'
   defaults:
@@ -12,6 +13,7 @@ instagram_basic_display.generate:
     _title: 'Store Instagram Images to the database'
   requirements:
     _access: 'TRUE'
+
 instagram_basic_display.oauth:
   path: '/instagram/oauth'
   defaults:

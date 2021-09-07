@@ -1,0 +1,4 @@
+manage Instagram settings:
+  title: 'Manage Instagram settings'
+  description: 'Manage the settings for the Instagram Basic Display API'
+  restrict access: true
