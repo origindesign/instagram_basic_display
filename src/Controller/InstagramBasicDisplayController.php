@@ -117,10 +117,12 @@ class InstagramBasicDisplayController extends ControllerBase {
 
     // Get the short lived access token (valid for 1 hour)
     $token = $this->instagramBasicDisplayApi->getOAuthToken($code, true);
-    ksm('oauth:' .$token);
+    ksm('oauth:');
+    ksm($token);
     // Exchange this token for a long lived token (valid for 60 days)
     $token = $this->instagramBasicDisplayApi->getLongLivedToken($token);
-    ksm('long:' .$token);
+    ksm('long:');
+    ksm($token);
 
     // Save token into DB
     if($this->storage->setAccessToken($token)){
