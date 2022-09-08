@@ -100,7 +100,7 @@ class InstagramStorage {
    * @return bool
    */
   public function setAccessToken($token){
-
+    ksm('storage:'. $token);
     $query = $this->database->merge('instagram_access_token');
     $query->key(array(
       'iid' => 1
